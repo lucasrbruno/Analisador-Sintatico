@@ -57,6 +57,6 @@ void listaCaseLinha(token_type* listaTokens, int *index);
 void chamadaFuncao(token_type* listaTokens, int *index);
 void listaArgChamadaFuncao(token_type* listaTokens, int *index);
 void listaArgChamadaFuncaoLinha(token_type* listaTokens, int *index);
-void deuPau(token_type token);
+void deuPau(token_type token, int erro_numero, token_type* listaTokens, int *index);
 void voltarToken(int *index);
-void statementIf(token_type* listaTokens, int* index);
+void statementIf(token_type* listaTokens, int *index);
