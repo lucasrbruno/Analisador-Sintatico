@@ -11,26 +11,26 @@ token_type* lerArquivo(FILE *arquivo, int tamanho){
         fgets(palavra, MAX_STRINGS,arquivo);  
         if (palavra[strlen(palavra) - 1] == '\n')
             palavra[strlen(palavra) - 1] = '\0';
-        printf("TIPO %s\n", palavra);
+        //printf("TIPO %s\n", palavra);
         token_type token;
         strcpy(token.tipo, palavra);
         fgets(palavra, MAX_STRINGS,arquivo);
         if (palavra[strlen(palavra) - 1] == '\n')
             palavra[strlen(palavra) - 1] = '\0';
         strcpy(token.valor, palavra);
-        printf("Valor %s\n", token.valor);
+        //printf("Valor %s\n", token.valor);
         fgets(palavra, MAX_STRINGS,arquivo);
         if (palavra[strlen(palavra) - 1] == '\n')
             palavra[strlen(palavra) - 1] = '\0';
         token.linha = atoi(palavra);
-        printf("LINHA %s\n", palavra);
+        //printf("LINHA %s\n", palavra);
         //printf("%s\n", palavra);
         fgets(palavra, MAX_STRINGS,arquivo);
         if (palavra[strlen(palavra) - 1] == '\n')
             palavra[strlen(palavra) - 1] = '\0';
         //printf("%s\n", palavra);
         token.coluna = atoi(palavra);
-        printf("COLUNA %s\n", palavra);
+        //printf("COLUNA %s\n", palavra);
         listaTokens[i++] = token;         
     }
    
@@ -39,9 +39,11 @@ token_type* lerArquivo(FILE *arquivo, int tamanho){
 
 
 token_type lerToken(token_type* listaTokens, int *index){
-    return listaTokens[*index++];
+    token_type token = listaTokens[*index];
+    (*index) += 1;
+    return token;
 }
 
 void voltarToken(int *index){
-    *index--;
+    (*index) -= 1;
 }

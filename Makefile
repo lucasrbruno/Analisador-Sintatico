@@ -6,7 +6,7 @@ TARGET = sintatico
 all: $(TARGET)
 
 sintatico: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o teste0 sintatico.c $(CLIBS)
+	$(CC) $(CFLAGS) $(OBJS) -o sintatico sintatico.c $(CLIBS)
 
 io.o: io.c 
 	$(CC) $(CFLAGS) -c io.c $(CLIBS)
