@@ -4,7 +4,7 @@ O Analisador Sintático recebe uma lista de tokens de um arquivo e retorna os er
 O código foi baseado na seguinte gramática livre de contexto: <br> https://lookaside.fbsbx.com/file/glc.txt?token=AWxIPu_BTmIMJVkghBWahr44-Z-BmE6po3XZHE78HVr1oGT_Qa8SUgjZhmBcqm7UN7R_XBjUnMwwprxUyECsUYk4uKBjj5FsMiWVoD1djz_V1-fG5az1GUk4Tdwl4Xl-zdC4huI1sAA26JMQcKYZHRhBycsuAjiVDD851mI82Yw2zg
 
 Para compilar:<br>
-make clean
+make clean <br>
 make
 
 Para executar:<br>
