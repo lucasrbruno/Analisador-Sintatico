@@ -9,6 +9,12 @@ make
 
 Para executar:<br>
 ./sintatico arquivo_com_a_lista_de_tokens.txt (use o nome tokens.txt para rodar no exemplo contido nesse repositório)
+<br> OBS: O arquivo txt deve estar no seguinte formato: <br>
+token.tipo <br>
+token.valor <br>
+token.linha <br>
+token.coluna <br>
+Cada informação de cada token deve estar separado por \n.
 
 Infelizmente o código contém erros não identificados na implementação da gramática. Muitas vezes ele dá erros de fim de escopo inválidos em situações em que não necessariamente deveria haver um fim de escopo. Porém, o código se mostrou eficiente para encontrar erros de ponto e vírgula, parenteses em laços e ifs e erros em declarações de funções.
 
