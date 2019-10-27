@@ -39,7 +39,7 @@ token_type* lerArquivo(FILE *arquivo, int tamanho){
 
 
 token_type lerToken(token_type* listaTokens, int *index){
-    return listaTokens[++*index];
+    return listaTokens[*index++];
 }
 
 void voltarToken(int *index){
