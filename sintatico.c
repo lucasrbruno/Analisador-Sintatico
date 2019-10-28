@@ -28,6 +28,7 @@ void sintatico(token_type* listaTokens, int *index, int tamanho){
 */
 void funcao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em funcao.\n", token.valor);
     if(tipo(token)){
         token = lerToken(listaTokens, index);   
         if(strcmp(token.tipo, "identificador") == 0){
@@ -72,6 +73,7 @@ int tipo(token_type token){
 */
 void listaArg(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em listaArg.\n", token.valor);
     if (strcmp(token.valor, ",") == 0){
         listaArg(listaTokens, index);
     } else if (tipo(token)){
@@ -86,6 +88,7 @@ void listaArg(token_type* listaTokens, int *index){
 */
 void arg(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em arg.\n", token.valor);
     if (tipo(token)){
         token = lerToken(listaTokens, index);
         if (!(strcmp(token.tipo,"identificador") == 0))
@@ -99,6 +102,7 @@ void arg(token_type* listaTokens, int *index){
 */
 void declaracao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em declaracao.\n", token.valor);
     if (tipo(token))
         listaIdentificadores(listaTokens, index);
     else
@@ -111,6 +115,7 @@ void declaracao(token_type* listaTokens, int *index){
 */
 void listaIdentificadores(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em lista id.\n", token.valor);
     if (!(strcmp(token.tipo,"identificador") == 0))
         deuPau(token, 5, listaTokens, index);
     else{
@@ -137,6 +142,7 @@ void listaIdentificadores(token_type* listaTokens, int *index){
 */
 void statement(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em statement.\n", token.valor);
     if (strcmp(token.valor,"for") == 0){
         voltarToken(index);
         statementFor(listaTokens, index);
@@ -207,6 +213,7 @@ void statement(token_type* listaTokens, int *index){
 */
 void statementFor(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em for.\n", token.valor);
     if(strcmp(token.valor,"for") == 0){
         token = lerToken(listaTokens, index);
         if(strcmp(token.valor,"(") == 0){
@@ -238,6 +245,7 @@ void statementFor(token_type* listaTokens, int *index){
 */
 void expressaoOpcional(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em expressao opcional.\n", token.valor);
      if(strcmp(token.tipo,"identificador") == 0){
          voltarToken(index);
          expressao(listaTokens, index);
@@ -250,6 +258,7 @@ void expressaoOpcional(token_type* listaTokens, int *index){
 */
 void statementWhile(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em statement While.\n", token.valor);
     if(strcmp(token.valor,"while") == 0){
         token = lerToken(listaTokens, index);
         if(strcmp(token.valor,"(") == 0){
@@ -270,6 +279,7 @@ void statementWhile(token_type* listaTokens, int *index){
 */
 void statementDoWhile(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em do while.\n", token.valor);
     if(strcmp(token.valor,"do") == 0){
         statementEscopo(listaTokens, index);
         token = lerToken(listaTokens, index);
@@ -294,6 +304,7 @@ void statementDoWhile(token_type* listaTokens, int *index){
 */
 void statementIf(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em if.\n", token.valor);
     if(strcmp(token.valor,"if") == 0){
         token = lerToken(listaTokens, index);
         if(strcmp(token.valor,"(") == 0){   
@@ -316,6 +327,7 @@ void statementIf(token_type* listaTokens, int *index){
 */
 void parteElse(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em else.\n", token.valor);
     if(strcmp(token.valor,"else") == 0){
         statement(listaTokens, index);    
     }
@@ -330,6 +342,7 @@ void parteElse(token_type* listaTokens, int *index){
 */
 void statementReturn(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em return.\n", token.valor);
     if(strcmp(token.valor,";") == 0){
         voltarToken(index);
         return;
@@ -345,6 +358,7 @@ void statementReturn(token_type* listaTokens, int *index){
 */
 void statementEscopo(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em escopo.\n", token.valor);
     if(strcmp(token.valor,"{") == 0){
         listaStatement(listaTokens, index);
         token = lerToken(listaTokens, index);
@@ -369,9 +383,11 @@ void listaStatement(token_type* listaTokens, int *index){
 */
 void listaStatementLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em statement linha.\n", token.valor);
     if(strcmp(token.valor,"for") == 0 || strcmp(token.valor,"while") == 0 || strcmp(token.valor,"do") == 0 || tipo(token)
     || strcmp(token.valor,";") == 0 || strcmp(token.valor,"{") == 0 || strcmp(token.tipo,"identificador") == 0 ||
     strcmp(token.valor,"return") == 0 || strcmp(token.valor,"break") == 0 || strcmp(token.valor,"switch") == 0 ){
+        printf("%s passou aqui na listaStatementLinha.\n", token.valor);
         voltarToken(index);
         statement(listaTokens, index);
         listaStatementLinha(listaTokens, index);
@@ -386,6 +402,7 @@ void listaStatementLinha(token_type* listaTokens, int *index){
 */
 void expressao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em expressao.\n", token.valor);
     if(strcmp(token.tipo,"identificador") == 0){
         expressao02(listaTokens, index);
     }
@@ -403,6 +420,7 @@ void expressao(token_type* listaTokens, int *index){
 */
 void expressao02(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em expressao02.\n", token.valor);
     if(strcmp(token.tipo, "operador") == 0){
         expressao(listaTokens, index);
         return;
@@ -416,6 +434,7 @@ void expressao02(token_type* listaTokens, int *index){
 */
 void valorR(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em valorR.\n", token.valor);
     if(comparacao(token)){
         magnitude(listaTokens, index);
         valorRLinha(listaTokens, index);
@@ -437,6 +456,7 @@ void valorR(token_type* listaTokens, int *index){
 */
 void valorRLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em RLinha.\n", token.valor);
     if(comparacao(token)){
         magnitude(listaTokens, index);
         valorRLinha(listaTokens, index);
@@ -484,6 +504,7 @@ void termo(token_type* listaTokens, int *index){
 */
 void magnitudeLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em magnitudeLinha.\n", token.valor);
     if(strcmp(token.valor, "+") == 0 || strcmp(token.valor, "-") == 0){
         termo(listaTokens, index);
         magnitudeLinha(listaTokens, index);
@@ -499,6 +520,7 @@ void magnitudeLinha(token_type* listaTokens, int *index){
 */
 void termoLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em termo Linha.\n", token.valor);
     if(strcmp(token.valor, "*") == 0 || strcmp(token.valor, "/") == 0 ){
         fator(listaTokens, index);
         termoLinha(listaTokens, index);
@@ -518,6 +540,7 @@ void termoLinha(token_type* listaTokens, int *index){
 */
 void fator(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em fator.\n", token.valor);
     if(strcmp(token.valor, "(") == 0){
         expressao(listaTokens, index);
         token = lerToken(listaTokens, index);
@@ -547,6 +570,7 @@ void fator(token_type* listaTokens, int *index){
 */
 void switch01(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em swtich01.\n", token.valor);
     if(strcmp(token.valor, "switch") == 0){
         token = lerToken(listaTokens, index);
         if(strcmp(token.valor, "(") == 0){
@@ -580,6 +604,7 @@ void switch01(token_type* listaTokens, int *index){
 */
 void switch02(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em switch02.\n", token.valor);
     if(strcmp(token.tipo, "numero") == 0 || strcmp(token.tipo, "identificador") == 0 || strcmp(token.valor, "\"") == 0 || 
     strcmp(token.valor, "\'") == 0)
         return;
@@ -592,6 +617,7 @@ void switch02(token_type* listaTokens, int *index){
 */
 void listaCase(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em listaCase.\n", token.valor);
     if(strcmp(token.valor, "case") == 0){
         switch02(listaTokens, index);
         token = lerToken(listaTokens, index);
@@ -614,6 +640,7 @@ void listaCase(token_type* listaTokens, int *index){
 */
 void listaCaseLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em listaCaseLinha.\n", token.valor);
     if(strcmp(token.valor, "case") == 0){
         switch02(listaTokens, index);
         token = lerToken(listaTokens, index);
@@ -643,6 +670,7 @@ void listaCaseLinha(token_type* listaTokens, int *index){
 */
 void chamadaFuncao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em Chamadafuncao.\n", token.valor);
     if(strcmp(token.tipo, "identificador") == 0){
         token = lerToken(listaTokens, index);
         if(strcmp(token.valor, "(") == 0){
@@ -672,6 +700,7 @@ void chamadaFuncao(token_type* listaTokens, int *index){
 */
 void listaArgChamadaFuncao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em listaArgChamadaFuncao.\n", token.valor);
     if(strcmp(token.tipo, "numero") == 0 || strcmp(token.tipo, "identificador") == 0 || strcmp(token.valor, "\"") == 0 || 
     strcmp(token.valor, "\'") == 0){
         voltarToken(index);
@@ -687,6 +716,7 @@ void listaArgChamadaFuncao(token_type* listaTokens, int *index){
 */
 void listaArgChamadaFuncaoLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
+    printf("%s passando em listaArgChamadaFuncaoLinha.\n", token.valor);
     if(strcmp(token.valor, ",") == 0){
         switch02(listaTokens, index);
         listaArgChamadaFuncaoLinha(listaTokens, index);
@@ -897,7 +927,9 @@ void deuPau(token_type token, int erro_numero, token_type* listaTokens, int *ind
     }
 
     //consome tokens ate chegar num ponto e virgula e fecha chave
-    while(!(strcmp(token.valor, ";") == 0 || strcmp(token.valor, "}") == 0))
+    while(!(strcmp(token.valor, ";") == 0 || 
+    strcmp(token.valor, "}") == 0 || 
+    strcmp(token.valor, "{") == 0))
         token = lerToken(listaTokens, index);
 }
 
