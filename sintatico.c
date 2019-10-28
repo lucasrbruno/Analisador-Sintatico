@@ -1,6 +1,16 @@
 #include "sintatico.h"
+/*  Analisador Sintatico feito por Lucas Rezende Bruno
+
+    Disciplina: Compiladores
+    Professor: Flavio Schiavoni
 
 
+*/
+
+
+
+//<linguagem> ::= <funcao>
+//enquanto a lista de tokens nao acabar
 void sintatico(token_type* listaTokens, int *index, int tamanho){
     int count = 0;
     while((*index) < tamanho){
@@ -13,6 +23,9 @@ void sintatico(token_type* listaTokens, int *index, int tamanho){
 }
 
 
+/*
+<funcao>::= <tipo> id ( <listaArg> )
+*/
 void funcao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(tipo(token)){
@@ -37,7 +50,13 @@ void funcao(token_type* listaTokens, int *index){
     }
     deuPau(token, 46 ,listaTokens, index);
 }
-
+/* 
+<tipo>::= int | 
+          float | 
+          char |
+          double | 
+          void 
+*/
 int tipo(token_type token){    
     if((strcmp(token.valor, "float") == 0) || (strcmp(token.valor, "char") == 0) || 
     (strcmp(token.valor, "double") == 0) || (strcmp(token.valor, "void") == 0) || (strcmp(token.valor, "int") == 0)){
@@ -46,6 +65,11 @@ int tipo(token_type token){
     return 0;        
 }
 
+/*
+<listaArg>::= <arg> |
+			  , <listaArg> |
+			  ε 
+*/
 void listaArg(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if (strcmp(token.valor, ",") == 0){
@@ -57,6 +81,9 @@ void listaArg(token_type* listaTokens, int *index){
         voltarToken(index);         
 }
 
+/*
+<arg>::= <tipo> id
+*/
 void arg(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if (tipo(token)){
@@ -66,6 +93,10 @@ void arg(token_type* listaTokens, int *index){
     }        
 }
 
+/*
+<declaracao>::= <tipo> <listaIdentificadores> |
+				ε
+*/
 void declaracao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if (tipo(token))
@@ -74,6 +105,10 @@ void declaracao(token_type* listaTokens, int *index){
         voltarToken(index);
 }
 
+/*
+<listaIdentificadores>::= id |
+					      id , <listaIdentificadores>
+*/
 void listaIdentificadores(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if (!(strcmp(token.tipo,"identificador") == 0))
@@ -87,6 +122,19 @@ void listaIdentificadores(token_type* listaTokens, int *index){
     }        
 }
 
+/*
+<statement>::= <statementFor> |
+			   <statementWhile> |
+			   <expressao> ; |
+			   <statementIf> |
+			   <statementEscopo> |
+			   <declaracao> |
+			   <statementDoWhile> |
+			   return <statementReturn> ; |
+			   break ; |
+			   <switch01> |
+			   ;
+*/
 void statement(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if (strcmp(token.valor,"for") == 0){
@@ -154,6 +202,9 @@ void statement(token_type* listaTokens, int *index){
         }   
 }
 
+/*
+<statementFor>::= for ( <expressao> ; <expressaoOpcional> ; <expressaoOpcional> ) <statement>
+*/
 void statementFor(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,"for") == 0){
@@ -181,6 +232,10 @@ void statementFor(token_type* listaTokens, int *index){
     else deuPau(token, 13, listaTokens, index);
 }
 
+/*
+<expressaoOpcional>::= <expressao> |
+					   ε
+*/
 void expressaoOpcional(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
      if(strcmp(token.tipo,"identificador") == 0){
@@ -190,6 +245,9 @@ void expressaoOpcional(token_type* listaTokens, int *index){
      else voltarToken(index);
 }
 
+/*
+<statementWhile>::= while ( <expressao> ) <statement>
+*/
 void statementWhile(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,"while") == 0){
@@ -207,6 +265,9 @@ void statementWhile(token_type* listaTokens, int *index){
     else deuPau(token, 16, listaTokens, index);
 }
 
+/*
+<statementDoWhile>::= do <statementEscopo> while () <expressao> )
+*/
 void statementDoWhile(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,"do") == 0){
@@ -228,6 +289,9 @@ void statementDoWhile(token_type* listaTokens, int *index){
     else deuPau(token, 20, listaTokens, index);
 }
 
+/*
+<statementIf>::= if ( <expressao> ) <statement> <parteElse>
+*/
 void statementIf(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,"if") == 0){
@@ -246,6 +310,10 @@ void statementIf(token_type* listaTokens, int *index){
     else deuPau(token, 22, listaTokens, index);
 }
 
+/*
+<parteElse>::= else <statement> |
+			   ε
+*/
 void parteElse(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,"else") == 0){
@@ -254,6 +322,12 @@ void parteElse(token_type* listaTokens, int *index){
     else voltarToken(index);
 }
 
+/*
+<statementReturn>::= id |
+				     numero |
+				     literal|
+				     ε
+*/
 void statementReturn(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,";") == 0){
@@ -266,6 +340,9 @@ void statementReturn(token_type* listaTokens, int *index){
     deuPau(token, 23, listaTokens, index);
 }
 
+/*
+<statementEscopo>::= { <listaStatement> }
+*/
 void statementEscopo(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,"{") == 0){
@@ -278,11 +355,18 @@ void statementEscopo(token_type* listaTokens, int *index){
     else deuPau(token, 25, listaTokens, index);
 }
 
+/*
+<listaStatement>::= <statement> <listaStatementLinha>
+*/
 void listaStatement(token_type* listaTokens, int *index){
     statement(listaTokens, index);
     listaStatementLinha(listaTokens, index);
 }
 
+/*
+<listaStatementLinha>::= <statement> <listaStatementLinha> |
+						 ε
+*/
 void listaStatementLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.valor,"for") == 0 || strcmp(token.valor,"while") == 0 || strcmp(token.valor,"do") == 0 || tipo(token)
@@ -296,6 +380,10 @@ void listaStatementLinha(token_type* listaTokens, int *index){
     voltarToken(index);
 }
 
+/*
+<expressao>::= id <expressao02> |
+			   <valorR>
+*/
 void expressao(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.tipo,"identificador") == 0){
@@ -310,6 +398,9 @@ void expressao(token_type* listaTokens, int *index){
     else deuPau(token, 26, listaTokens, index);
 }
 
+/*
+<expressao02>::= operador <expressao>
+*/
 void expressao02(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(strcmp(token.tipo, "operador") == 0){
@@ -319,6 +410,10 @@ void expressao02(token_type* listaTokens, int *index){
     deuPau(token, 27, listaTokens, index);
 }
 
+/*
+<valorR>::=	<comparacao> <magnitude> <valorRLinha> |
+			<magnitude>
+*/
 void valorR(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(comparacao(token)){
@@ -336,6 +431,10 @@ void valorR(token_type* listaTokens, int *index){
     deuPau(token, 28, listaTokens, index); 
 }
 
+/*
+<valorRLinha>::= <comparacao> <magnitude> <valorRLinha> |
+				 ε
+*/
 void valorRLinha(token_type* listaTokens, int *index){
     token_type token = lerToken(listaTokens, index);
     if(comparacao(token)){
